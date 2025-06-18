@@ -4,9 +4,8 @@ const express = require('express');
 
 const app = express();
 
-app.get("/ab*cd", (req, res) => {
-    res.send({firstName: "John", lastName: "Doe"});
-});
+
+
 
 
 
