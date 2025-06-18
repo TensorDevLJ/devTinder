@@ -77,7 +77,6 @@ devTinder is a developer matchmaking app — think of it like Tinder but for dev
 ## 🌐 API Design (REST)
 
 > **REST (Representational State Transfer)** APIs enable communication between frontend and backend over HTTP.
-
 ### 🧾 HTTP Methods Used
 
 | Method   | Description                             |
@@ -98,6 +97,22 @@ devTinder is a developer matchmaking app — think of it like Tinder but for dev
 - Response (success or failure) is sent back to frontend
 
 ---
+## 📡 API Endpoints
+
+| Method | Endpoint            | Description                         |
+|--------|---------------------|-------------------------------------|
+| POST   | `/signup`           | Create a new user account           |
+| POST   | `/login`            | Login with email and password       |
+| GET    | `/profile`          | Get the current user's profile      |
+| POST   | `/profile`          | Create a new profile                |
+| PATCH  | `/profile`          | Update the current user's profile   |
+| DELETE | `/profile`          | Delete the current user's profile   |
+| GET    | `/requests`         | View all incoming connection requests |
+| GET    | `/connections`      | View all accepted connections       |
+| POST   | `/send-request`     | Send a connection request           |
+| POST   | `/review-request`   | Accept, reject, ignore, or block a request |
+
+
 
 ## 📌 Coming Soon
 
