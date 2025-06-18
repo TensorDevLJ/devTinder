@@ -8,6 +8,8 @@
 - read more about id in mangodb and __v what is that 
 - create /signup API to add data to database
 - push some documents using  API calls using postman and save the data 
+- error handling using Try catch
+
 
 
 # 🚀 MongoDB + Mongoose User Signup API
