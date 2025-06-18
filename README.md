@@ -123,4 +123,23 @@ devTinder is a developer matchmaking app — think of it like Tinder but for dev
 
 ---
 
+
+### all the steps
+- install express js (npm i express) 
+- to run use `node src/app.js`
+- install nodemon (npm i -g nodemon) to save automatically
+- to run use `nodemon src/app.js`
+- put these 2 commands in package.json so that it'll help to run the code in easy way 
+["start": "node src/app.js",
+   "dev": "nodemon src/app.js"]
+   - run using `npm run start` 0r `npm run dev`
+
+
+
+
+
+
+
+
 > Built with ❤️ by passionate developers, for developers. Let’s match, code, and collaborate!
+
