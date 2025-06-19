@@ -19,6 +19,65 @@ app.post("/signup", async (req, res) => {
     }
 });
 
+app.get("/user", async (req, res) => {
+     const userEmail = req.body.email;
+ 
+    try{
+     const user = await User.find({ email: userEmail});
+
+     if(user.length === 0) {
+         return res.status(404).send("User not found");
+     }else {
+     res.send(user);
+     }
+    } catch(err) {
+        
+        res.status(500).send("Error fetching user: " + err.message);
+    }
+});
+
+
+app.get("/feed",  async (req, res) => {
+    try {
+       const user = await  User.find();
+        if (!user || user.length === 0) {
+            return res.status(404).send("No users found");
+        }
+        res.send(user);
+
+    } catch (err) {
+        res.status(500).send("Error fetching feed: " + err.message);
+    }
+});
+
+//delete method
+app.delete("/user", async (req, res) => {
+    const userId = req.body.userId;
+    try {
+        const user = await User.findByIdAndDelete(userId);
+      
+        res.send("User deleted successfully");
+    } catch (err) {
+        res.status(500).send("Error deleting user: " + err.message);
+    }
+}
+);
+//update method
+
+app.patch("/user", async(req, res)=> {
+    const  userId = req.body.userId;
+    const data= req.body;
+
+    try {
+        await User.findByIdAndUpdate({ _id:userId }, data);
+        res.send("User updated successfully");
+    }
+    catch (err) {
+        res.status(500).send("Error updating user: " + err.message);
+    }
+})
+
+
 connectDB().then(() => {
     console.log("Database connection established.......");
     app.listen(3000, () => {
