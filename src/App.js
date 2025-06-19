@@ -5,29 +5,17 @@ const User = require('./models/user');
 app.use(express.json());
 
 
-
 app.post("/signup", async (req, res) => {
+
+        const user = new User(req.body);   
+    
     try {
-        const existingUser = await User.findOne({ email: "likhithaj22@gmail.com" });
-
-        if (existingUser) {
-            return res.status(400).send("User with this email already exists.");
-        }
-
-        const user = new User({
-            firstName: "tarun",
-            lastName: "bommali",
-            email: "tarun57@gmail.com",
-            password: "tarun123",
-            age: 22,
-            gender: "male",
-        });
-
         await user.save();
         res.send("User created successfully");
-    } catch (err) {
+    }
+        catch (err) {
         console.error(err);
-        res.status(500).send("Error creating user");
+        res.status(500).send("Error creating user"+ err.message);
     }
 });
 
