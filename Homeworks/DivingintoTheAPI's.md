@@ -14,6 +14,185 @@
 -  API - update the user with enmailID 
 
 
+# User Management API - Express + MongoDB (Mongoose)
+
+This README provides explanations and code examples for commonly used concepts and tasks in a typical Express.js and MongoDB-based REST API application.
+
+---
+
+## 📌 Differences between JavaScript Object and JSON Object
+
+| JavaScript Object                         | JSON Object                            |
+|------------------------------------------|----------------------------------------|
+| Can contain functions, symbols, undefined| Cannot contain functions or undefined  |
+| Keys can be unquoted                     | Keys must be in double quotes          |
+| Used in JavaScript code                  | Used for data interchange              |
+| Example: `{ name: "John" }`              | Example: `{ "name": "John" }`          |
+
+---
+
+## 📦 Add `express.json()` Middleware
+
+```js
+const express = require("express");
+const app = express();
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+```
+
+---
+
+## 📝 Dynamic Signup API
+
+```js
+app.post("/signup", async (req, res) => {
+    const { name, email, password } = req.body;
+    try {
+        const user = new User({ name, email, password });
+        await user.save();
+        res.status(201).json(user);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+```
+
+---
+
+## 🔁 `user.findOne()` with Duplicate Email IDs
+
+If `User.findOne({ email: 'test@example.com' })` is called and multiple documents have the same email, **only the first match** is returned based on insertion order.
+
+---
+
+## 📩 API - Get User by Email
+
+```js
+app.get("/user/email/:email", async (req, res) => {
+    const user = await User.findOne({ email: req.params.email });
+    if (!user) return res.status(404).send("User not found");
+    res.json(user);
+});
+```
+
+---
+
+## 📤 API - GET /feed (All Users)
+
+```js
+app.get("/feed", async (req, res) => {
+    const users = await User.find();
+    res.json(users);
+});
+```
+
+---
+
+## 🔍 API - Get User by ID
+
+```js
+app.get("/user/:id", async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).send("User not found");
+        res.json(user);
+    } catch (err) {
+        res.status(400).send("Invalid ID");
+    }
+});
+```
+
+---
+
+## ❌ Delete User API
+
+```js
+app.delete("/user/:id", async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.id);
+        if (!user) return res.status(404).send("User not found");
+        res.send("User deleted successfully");
+    } catch (err) {
+        res.status(400).send("Invalid ID");
+    }
+});
+```
+
+---
+
+## ✏️ Update User API
+
+```js
+app.put("/user/:id", async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true
+        });
+        if (!user) return res.status(404).send("User not found");
+        res.json(user);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+```
+
+---
+
+## 📘 Mongoose Model Methods
+
+Refer to [Mongoose Docs: Models](https://mongoosejs.com/docs/models.html)
+
+Common model methods:
+- `Model.find()`
+- `Model.findOne()`
+- `Model.findById()`
+- `Model.create()`
+- `Model.findByIdAndUpdate()`
+- `Model.findByIdAndDelete()`
+
+---
+
+## ⚙️ Options in `findOneAndUpdate()`
+
+Example:
+
+```js
+User.findOneAndUpdate({ email: "test@example.com" }, { name: "Updated" }, {
+    new: true,             // returns updated document
+    upsert: true,          // creates if not exists
+    runValidators: true,   // runs schema validation
+});
+```
+
+Refer to: [Mongoose findOneAndUpdate Options](https://mongoosejs.com/docs/api/model.html#Model.findOneAndUpdate())
+
+---
+
+## 🔄 API - Update User by Email
+
+```js
+app.put("/user/email/:email", async (req, res) => {
+    try {
+        const user = await User.findOneAndUpdate({ email: req.params.email }, req.body, {
+            new: true,
+            runValidators: true
+        });
+        if (!user) return res.status(404).send("User not found");
+        res.json(user);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+```
+
+---
+
+## ✅ Done!
+
+This README covers essential CRUD API operations and concepts used with Express and MongoDB via Mongoose.
+
 
 
 # 🚀 User Management API with Express.js & MongoDB (Mongoose)
