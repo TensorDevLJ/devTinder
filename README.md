@@ -122,8 +122,22 @@ devTinder is a developer matchmaking app — think of it like Tinder but for dev
 - Admin dashboard
 
 ---
+### contents
 
-
+- Introduction to our project
+- Features, HLD, LLD and planning
+- creating our express server
+- Routing and request handlers
+- Middlewares and error Handlers
+- Database and schema & models Mongoose
+- Diving into APIs
+- Data Sanitization & Schema Validations
+- Encrypting Passwords
+- Authentication, JWT &Cookies
+- Diving into the API and express Router
+- Logical DB Query & Compound Indexes
+- Ref, Populate & thought process of writing APIs
+- Building Feed API & Pagination
 
 
 
