@@ -17,7 +17,7 @@ The following table shows the current support status for each version of the pro
 
 If you discover a security vulnerability, please follow these steps:
 
-1. **Report it to us directly** at: `security@yourprojectdomain.com`
+1. **Report it to us directly** at: `likhithaj22@gmail.com`
 2. Please provide:
    - A detailed description of the issue.
    - Steps to reproduce (if possible).
