@@ -1,9 +1,8 @@
-# Security Policy
+# 🔐 Security Policy
 
-## Supported Versions
+## 📦 Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+The following table shows the current support status for each version of the project:
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -12,10 +11,25 @@ currently being supported with security updates.
 | 4.0.x   | :white_check_mark: |
 | < 4.0   | :x:                |
 
-## Reporting a Vulnerability
+---
 
-Use this section to tell people how to report a vulnerability.
+## 🛡️ Reporting a Vulnerability
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+If you discover a security vulnerability, please follow these steps:
+
+1. **Report it to us directly** at: `security@yourprojectdomain.com`
+2. Please provide:
+   - A detailed description of the issue.
+   - Steps to reproduce (if possible).
+   - Any screenshots or logs that might help.
+
+3. **Response Time**: We typically respond within **3–5 business days**.
+
+4. Once validated:
+   - We will confirm the issue and assign a CVE (if applicable).
+   - You will receive updates as we work on a fix.
+   - We may request more information or ask for testing help.
+
+5. If the report is invalid or does not qualify as a security issue, we will provide reasoning.
+
+Thank you for helping us improve our project security!
