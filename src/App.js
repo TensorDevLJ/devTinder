@@ -6,36 +6,45 @@ app.use(express.json());
 const { validationSignUpData } = require('./utils/validation');
 const bcrypt = require('bcrypt');
 
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
+
+
+app.use(cookieParser());
+
 
 app.post("/signup", async (req, res) => {
-    
-try{
-    // Validate of data
+  try {
+    // 🔍 Validate incoming request data
     validationSignUpData(req);
 
-    //Encrypting password
-   const {password} = req.body;
+    // ✅ Destructure required fields from request body
+    const { firstName, lastName, email, password } = req.body;
 
-   const passworsHash = await bcrypt.hash(password, 10);
-   console.log(passworsHash);
+    // 🔐 Hash the password using bcrypt
+    const passwordHash = await bcrypt.hash(password, 10);
+    console.log("Hashed password:", passwordHash);
 
+    // 🧱 Create a new user instance with encrypted password
+    const user = new User({
+      firstName,
+      lastName,
+      email,
+      password: passwordHash,
+    });
 
+    // 💾 Save the user to the database
+    await user.save();
 
-    //creating a new instance of the user model
+    // ✅ Respond to the client
+    res.status(201).send("User created successfully");
 
-        const user = new User({
-            firstName, lastName, email, password: passworsHash,
-        });   
-    
-
-        await user.save();
-        res.send("User created successfully");
-    }
-        catch (err) {
-        console.error(err);
-        res.status(500).send("ERROR"+ err.message);
-    }
+  } catch (err) {
+    console.error(err);
+    res.status(400).send("ERROR: " + err.message);
+  }
 });
+
 
 app.post("/login", async (req, res) => {
 
@@ -50,6 +59,17 @@ app.post("/login", async (req, res) => {
         const isPasswordValid =await  bcrypt.compare(password, user.password);
 
         if(isPasswordValid) {
+
+            //create the jwt token
+        const token = await jwt.sign({ _id: user._id}, "DEV@Tinder$123");
+        console.log(token);
+
+
+
+
+            //add the token to the cookies and send it to the client or user
+        res.cookie("token", token);
+
             res.send("Login successful !!!");
         }
         else {
@@ -60,6 +80,27 @@ app.post("/login", async (req, res) => {
         res.status(400).send("ERROR:" + err.message);
     }
 })
+
+app.get("/profile", async (req, res) => {
+    try {const cookies = req.cookies;
+
+    const { token } = cookies;
+
+    const decodedMessage = await jwt.verify(token, "DEV@Tinder$123");
+
+    console.log(decodedMessage);
+    const { _id } = decodedMessage;
+    console.log("loggedIn user id:", _id);
+    const user = await User.findById(_id);
+
+    console.log(user);
+  
+    } catch (err) {
+        console.error("Error reading cookies:", err);
+        res.status(500).send("Error reading cookies: " + err.message);
+    }
+
+});
 
 app.get("/user", async (req, res) => {
      const userEmail = req.body.email;
